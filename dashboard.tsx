@@ -878,24 +878,6 @@ export default function Dashboard() {
                 </PopoverContent>
               </Popover>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={toggleTheme}
-                      className="text-slate-400 hover:text-slate-100"
-                    >
-                      {theme === "dark" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Toggle theme</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
               <Avatar>
                 <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
                 <AvatarFallback className="bg-slate-700 text-cyan-500">CM</AvatarFallback>
