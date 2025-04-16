@@ -40,6 +40,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { ResponsiveContainer, LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip } from "recharts"
 
 // NavItem component
 function NavItem({
@@ -127,7 +128,7 @@ function PerformanceChart() {
   return (
     <div className="absolute inset-0 flex items-center justify-center text-slate-400">
       {/* Placeholder for chart */}
-      <LineChart className="h-32 w-32 opacity-30" />
+      <RechartsLineChart className="h-32 w-32 opacity-30" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm">
         {/* Chart Placeholder */}
       </div>
@@ -295,7 +296,7 @@ function AnalyticsChart() {
   return (
     <div className="absolute inset-0 flex items-center justify-center text-slate-400">
       {/* Placeholder for chart */}
-      <LineChart className="h-32 w-32 opacity-30" />
+      <RechartsLineChart className="h-32 w-32 opacity-30" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm">
         {/* Chart Placeholder */}
       </div>
@@ -352,7 +353,7 @@ function InvestmentPerformanceChart() {
   return (
     <div className="absolute inset-0 flex items-center justify-center text-slate-400">
       {/* Placeholder for chart */}
-      <LineChart className="h-32 w-32 opacity-30" />
+      <RechartsLineChart className="h-32 w-32 opacity-30" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm">
         {/* Chart Placeholder */}
       </div>
@@ -608,6 +609,16 @@ export default function Dashboard() {
     { id: 3, title: "Unusual login", description: "Login attempt from unknown device.", time: "8:30 AM", type: "warning" },
     { id: 4, title: "Payment due", description: "Your credit card payment is due tomorrow.", time: "Yesterday", type: "warning" },
   ])
+
+  // Demo cash flow data for chart
+  const cashFlowData = [
+    { name: "Jan", net: monthlyIncome - monthlyExpenses },
+    { name: "Feb", net: monthlyIncome * 1.05 - monthlyExpenses * 1.02 },
+    { name: "Mar", net: monthlyIncome * 1.1 - monthlyExpenses * 1.03 },
+    { name: "Apr", net: monthlyIncome * 0.95 - monthlyExpenses * 0.97 },
+    { name: "May", net: monthlyIncome - monthlyExpenses },
+    { name: "Jun", net: monthlyIncome * 1.08 - monthlyExpenses * 1.05 },
+  ]
 
   // Simulate data loading
   useEffect(() => {
@@ -971,7 +982,19 @@ export default function Dashboard() {
                 <div className="mt-8 pt-6 border-t border-slate-700/50">
                   <div className="text-xs text-slate-500 mb-2 font-mono">FINANCIAL STATUS</div>
                   <div className="space-y-3">
-                    <StatusItem label="Cash Flow" value={78} color="cyan" />
+                    <div>
+                      <div className="text-xs text-slate-400 mb-1 font-mono">Cash Flow</div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-full h-10">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <RechartsLineChart data={cashFlowData}>
+                              <Line type="monotone" dataKey="value" stroke="#22d3ee" strokeWidth={2} dot={false} />
+                            </RechartsLineChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="text-sm font-medium text-cyan-400">78%</div>
+                      </div>
+                    </div>
                     <StatusItem label="Investments" value={65} color="green" />
                     <StatusItem label="Credit Health" value={92} color="blue" />
                   </div>
@@ -1075,13 +1098,19 @@ export default function Dashboard() {
                         </div>
 
                         <TabsContent value="performance" className="mt-0">
-                          <div className="h-64 w-full relative bg-slate-800/30 rounded-lg border border-slate-700/50 overflow-hidden">
-                            <PerformanceChart />
+                          <div className="h-64 w-full relative bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RechartsLineChart data={cashFlowData} margin={{ top: 10, right: 10, left: -20, bottom: 10 }}>
+                                <CartesianGrid stroke="#374151" strokeDasharray="3 3" />
+                                <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} />
+                                <YAxis tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} />
+                                <RechartsTooltip contentStyle={{ backgroundColor: 'rgba(17,24,39,0.8)', borderRadius: 4 }} labelStyle={{ color: '#94a3b8' }} />
+                                <Line type="monotone" dataKey="net" stroke="#22d3ee" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 4 }} />
+                              </RechartsLineChart>
+                            </ResponsiveContainer>
                             <div className="absolute bottom-4 right-4 bg-slate-900/80 backdrop-blur-sm rounded-md px-3 py-2 border border-slate-700/50">
                               <div className="text-xs text-slate-400">Net Cash Flow</div>
-                              <div className="text-lg font-mono text-cyan-400">
-                                ${(monthlyIncome - monthlyExpenses).toFixed(2)}
-                              </div>
+                              <div className="text-lg font-mono text-cyan-400">${(monthlyIncome - monthlyExpenses).toFixed(2)}</div>
                             </div>
                           </div>
                         </TabsContent>
