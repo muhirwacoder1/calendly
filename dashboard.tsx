@@ -34,13 +34,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-// import { Hexagon } from 'lucide-react'
-// import { TypeIcon as type } from 'lucide-react'
 
 // NavItem component
 function NavItem({
@@ -512,7 +511,7 @@ function SecurityActivity({
 }: { event: string; time: string; location: string; status: string }) {
   return (
     <div className="flex items-start space-x-3">
-      <Shield className="h-4 w-4 text-cyan-500 mt-0.5" />
+      <Shield className="h-4 w-4 text-cyan-500" />
       <div>
         <div className="text-sm font-medium text-slate-200">{event}</div>
         <div className="text-xs text-slate-400">{location}</div>
@@ -601,6 +600,14 @@ export default function Dashboard() {
 
   // Add a new state variable to track the active section
   const [activeSection, setActiveSection] = useState("dashboard")
+
+  // Fake notifications data
+  const [notifications] = useState<{ id: number; title: string; description: string; time: string; type: string }[]>([
+    { id: 1, title: "System update available", description: "Version 2.3.1 can be installed.", time: "10:00 AM", type: "update" },
+    { id: 2, title: "Password changed", description: "Your password was changed successfully.", time: "9:45 AM", type: "success" },
+    { id: 3, title: "Unusual login", description: "Login attempt from unknown device.", time: "8:30 AM", type: "warning" },
+    { id: 4, title: "Payment due", description: "Your credit card payment is due tomorrow.", time: "Yesterday", type: "warning" },
+  ])
 
   // Simulate data loading
   useEffect(() => {
@@ -852,22 +859,24 @@ export default function Dashboard() {
             </div>
 
             <div className="flex items-center space-x-3">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="relative text-slate-400 hover:text-slate-100">
-                      <Bell className="h-5 w-5" />
-                      <span className="absolute -top-1 -right-1 h-2 w-2 bg-cyan-500 rounded-full animate-pulse"></span>
-                      <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-cyan-600 text-[10px] font-medium text-white">
-                        4
-                      </span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Notifications</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative text-slate-400 hover:text-slate-100">
+                    <Bell className="h-5 w-5" />
+                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-cyan-500 rounded-full animate-pulse"></span>
+                    <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-cyan-600 text-[10px] font-medium text-white">
+                      {notifications.length}
+                    </span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {notifications.map((n) => (
+                      <AlertItem key={n.id} title={n.title} time={n.time} description={n.description} type={n.type} />
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
 
               <TooltipProvider>
                 <Tooltip>
