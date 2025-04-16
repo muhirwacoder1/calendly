@@ -3,7 +3,6 @@
 A real-time, responsive financial monitoring dashboard built with Next.js, React, TypeScript, Tailwind CSS, Radix UI, and Lucide Icons.
 
 ## Features
-- Simulated real-time system metrics (CPU, memory, network, security).
 - Financial statistics cards (balance, income, expenses, returns, savings rate).
 - Particle background effect for visual flair.
 - Interactive notifications popover with fake data.
