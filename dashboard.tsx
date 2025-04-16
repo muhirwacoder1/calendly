@@ -861,6 +861,28 @@ export default function Dashboard() {
             <div className="flex items-center space-x-3">
               <Popover>
                 <PopoverTrigger asChild>
+                  <div className="flex items-center space-x-2 cursor-pointer">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/placeholder.svg" alt="User" />
+                      <AvatarFallback className="bg-slate-700 text-cyan-500">DU</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium text-slate-100">Demo User</span>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="flex flex-col items-center space-y-4">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src="https://api.dicebear.com/6.x/avataaars/svg?seed=Demo" alt="Demo Avatar" />
+                      <AvatarFallback className="bg-slate-700 text-cyan-500">DU</AvatarFallback>
+                    </Avatar>
+                    <div className="text-sm font-medium text-slate-100">Demo User</div>
+                    <Button variant="destructive" size="sm" className="w-full justify-center">Sign Out</Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <Popover>
+                <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" className="relative text-slate-400 hover:text-slate-100">
                     <Bell className="h-5 w-5" />
                     <span className="absolute -top-1 -right-1 h-2 w-2 bg-cyan-500 rounded-full animate-pulse"></span>
@@ -874,25 +896,6 @@ export default function Dashboard() {
                     {notifications.map((n) => (
                       <AlertItem key={n.id} title={n.title} time={n.time} description={n.description} type={n.type} />
                     ))}
-                  </div>
-                </PopoverContent>
-              </Popover>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Avatar className="cursor-pointer">
-                    <AvatarImage src="/placeholder.svg" alt="User" />
-                    <AvatarFallback className="bg-slate-700 text-cyan-500">CM</AvatarFallback>
-                  </Avatar>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <div className="flex flex-col items-center space-y-4">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://api.dicebear.com/6.x/avataaars/svg?seed=Demo" alt="Demo Avatar" />
-                      <AvatarFallback className="bg-slate-700 text-cyan-500">DU</AvatarFallback>
-                    </Avatar>
-                    <div className="text-sm font-medium text-slate-100">Demo User</div>
-                    <Button variant="destructive" size="sm" className="w-full justify-center">Sign Out</Button>
                   </div>
                 </PopoverContent>
               </Popover>
