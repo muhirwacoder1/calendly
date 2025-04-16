@@ -878,10 +878,24 @@ export default function Dashboard() {
                 </PopoverContent>
               </Popover>
 
-              <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-                <AvatarFallback className="bg-slate-700 text-cyan-500">CM</AvatarFallback>
-              </Avatar>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Avatar className="cursor-pointer">
+                    <AvatarImage src="/placeholder.svg" alt="User" />
+                    <AvatarFallback className="bg-slate-700 text-cyan-500">CM</AvatarFallback>
+                  </Avatar>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="flex flex-col items-center space-y-4">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src="https://api.dicebear.com/6.x/avataaars/svg?seed=Demo" alt="Demo Avatar" />
+                      <AvatarFallback className="bg-slate-700 text-cyan-500">DU</AvatarFallback>
+                    </Avatar>
+                    <div className="text-sm font-medium text-slate-100">Demo User</div>
+                    <Button variant="destructive" size="sm" className="w-full justify-center">Sign Out</Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </header>
