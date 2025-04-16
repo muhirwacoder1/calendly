@@ -68,6 +68,6 @@ Contributions are welcome! Feel free to open issues or submit pull requests for 
 This project is open-source and available under the [MIT License](LICENSE).
 
 ## Contact
-*Author*: Demo User  
+*Author*: Alex Muhirwa
 *GitHub*: [muhirwacoder1](https://github.com/muhirwacoder1)  
-*Email*: your.email@example.com
+*
